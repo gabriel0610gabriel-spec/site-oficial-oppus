@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppus Shop</title>
     <style>
-        /* Estilos Base e Background Animado */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { 
             background: linear-gradient(-45deg, #050507, #1e0a29, #3b0764, #581c87);
@@ -13,30 +12,35 @@
             animation: gradientBG 15s ease infinite;
             color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Navbar e Estilização Geral mantida igual */
         nav { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
         .logo-nav { font-size: 1.5rem; font-weight: bold; cursor: pointer; }
         .btn-nav.discord { background-color: #5865F2; padding: 10px 20px; border-radius: 8px; text-decoration: none; color: white; border: none; }
+        
         .promo-banner { background: rgba(0,0,0,0.3); border: 1px solid #8b1ff5; width: 90%; max-width: 800px; border-radius: 12px; padding: 20px; text-align: center; margin-top: 30px; }
         .btn-connect { background: #8b1ff5; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
         
         .catalog-container { width: 90%; max-width: 800px; margin: 40px 0; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
         .card { background: rgba(0,0,0,0.4); border: 1px solid #8b1ff5; border-radius: 12px; padding: 20px; text-align: center; }
-        .btn-price { background: #8b1ff5; color: #fff; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.3s; }
-        .btn-price:hover { background: #a855f7; }
+        .btn-price { background: #8b1ff5; color: #fff; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
 
+        /* Seção de Descrição */
+        .features-section { width: 90%; max-width: 800px; margin-bottom: 50px; background: rgba(0,0,0,0.2); padding: 30px; border-radius: 15px; border: 1px solid #3f3f46; }
+        .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; font-size: 0.9rem; color: #d1d5db; }
+        .feature-category { margin-bottom: 20px; }
+        .feature-category h4 { color: #8b1ff5; margin-bottom: 10px; border-bottom: 1px solid #8b1ff5; padding-bottom: 5px; }
+
+        /* Modais */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-box { background: #18181b; border: 2px solid #8b1ff5; border-radius: 20px; padding: 30px; width: 90%; max-width: 400px; text-align: center; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 24px; }
+        .modal-box { background: #18181b; border: 2px solid #8b1ff5; border-radius: 20px; padding: 30px; width: 90%; max-width: 700px; position: relative; }
         
-        /* Roleta */
+        /* Layout Colunas Modal */
+        .modal-split { display: flex; gap: 30px; align-items: center; }
+        @media (max-width: 600px) { .modal-split { flex-direction: column; } .features-list { grid-template-columns: 1fr; } }
+        
+        .close-modal { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 24px; }
         .wheel-wrapper { position: relative; width: 220px; margin: 20px auto; }
         .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #fff; z-index: 10; }
         .wheel { width: 220px; height: 220px; border-radius: 50%; border: 5px solid #fff; background: conic-gradient(#ef4444 0deg 90deg, #f59e0b 90deg 180deg, #22c55e 180deg 270deg, #3b82f6 270deg 360deg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
@@ -52,12 +56,12 @@
 
     <div class="promo-banner">
         <h3>🎡 Roleta Diária</h3>
-        <p>Gira a cada 24 horas para ganhar descontos exclusivos!</p>
+        <p>Gira a cada 24 horas para ganhar descontos!</p>
         <button class="btn-connect" onclick="abrirModal('roleta')">Girar Roleta</button>
     </div>
 
     <main class="catalog-container">
-        <h2 style="margin-bottom: 20px;">Produtos</h2>
+        <h2>Produtos</h2>
         <div class="grid-container">
             <div class="card">
                 <h3>R6 - 1 Dia</h3>
@@ -77,18 +81,61 @@
         </div>
     </main>
 
+    <section class="features-section">
+        <h2>Recursos Phoenix R6S</h2>
+        <div class="features-list">
+            <div class="feature-category">
+                <h4>Player ESP</h4>
+                <ul>
+                    <li>Players: ESP para Rainbow, mostra jogadores atrás de paredes</li>
+                    <li>ESP Box: ESP em formato de caixas</li>
+                    <li>ESP Line: Linhas (Topo, Centro, Base)</li>
+                    <li>Skeleton: Wallhack em formato de esqueletos</li>
+                    <li>Name: Nicknames dos jogadores</li>
+                    <li>Head: Seleção de hitbox da cabeça</li>
+                    <li>Health: Exibição de HP (Barra ou Texto)</li>
+                    <li>Team Check: Não mostra aliados</li>
+                    <li>Operator Name: Mostrar nomes dos operadores</li>
+                    <li>Distance/Max Distance: Distância e limite do wallhack</li>
+                </ul>
+            </div>
+            <div class="feature-category">
+                <h4>Aimbot (AIM)</h4>
+                <ul>
+                    <li>Active Aimbot: Auxílio de mira ao atirar</li>
+                    <li>Aimbot Keys: 2 teclas configuráveis</li>
+                    <li>FOV Size: Tamanho da área de captura</li>
+                    <li>Draw FOV: Círculo de área de trabalho</li>
+                    <li>Hitboxes: Seleção de ossos específicos</li>
+                    <li>Mark Target: Marcar o alvo visualmente</li>
+                    <li>Sensitivity: Ajuste de suavidade da mira</li>
+                </ul>
+                <h4>Misc</h4>
+                <ul>
+                    <li>Crosshair: Mira estática central</li>
+                    <li>Hit Damage Effect: Visualização de dano causado</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <div id="modalPagamento" class="modal-overlay">
         <div class="modal-box">
             <span class="close-modal" onclick="fecharModal('modalPagamento')">✕</span>
-            <h2 id="modalProdutoNome">Produto</h2>
-            <div id="modalProdutoValor" style="font-size: 2rem; margin: 10px 0;">R$ 0,00</div>
-            <img src="image_9ee727.jpg" style="width: 180px; background: white; padding: 10px; border-radius: 10px;">
-            <p>Envie o comprovante no Discord.</p>
+            <div class="modal-split">
+                <img src="image_9ee727.jpg" style="width: 250px; background: white; padding: 10px; border-radius: 10px;">
+                <div>
+                    <h2 id="modalProdutoNome" style="margin-bottom:10px;">Produto</h2>
+                    <div id="modalProdutoValor" style="font-size: 2rem; color: #8b1ff5; font-weight: bold; margin-bottom: 20px;">R$ 0,00</div>
+                    <p style="margin-bottom: 20px;">Escaneie o QR Code para pagar. Após o pagamento, envie o comprovante no Discord.</p>
+                    <a href="#" class="btn-nav discord" style="display:inline-block;">Ir para Discord</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <div id="modalRoleta" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box" style="text-align: center;">
             <span class="close-modal" onclick="fecharModal('modalRoleta')">✕</span>
             <h2>🎡 Roleta da Sorte</h2>
             <div class="wheel-wrapper">
@@ -111,45 +158,35 @@
                 document.getElementById('modalPagamento').style.display = 'flex';
             }
         }
-
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function verificarTempoRoleta() {
             const btn = document.getElementById('btnGirar');
             const res = document.getElementById('resultadoRoleta');
             const ultimoGiro = localStorage.getItem('ultimoGiro');
-            
             if (ultimoGiro) {
                 const tempoPassado = new Date().getTime() - ultimoGiro;
-                const 24horas = 24 * 60 * 60 * 1000;
-                
-                if (tempoPassado < 24horas) {
-                    const tempoRestante = Math.ceil((24horas - tempoPassado) / (60 * 60 * 1000));
-                    btn.disabled = true;
-                    btn.style.opacity = "0.5";
+                const tempo24h = 24 * 60 * 60 * 1000;
+                if (tempoPassado < tempo24h) {
+                    const tempoRestante = Math.ceil((tempo24h - tempoPassado) / (60 * 60 * 1000));
+                    btn.disabled = true; btn.style.opacity = "0.5";
                     res.innerHTML = `⏳ Já rodaste hoje! Tenta novamente em ${tempoRestante}h.`;
                     return false;
                 }
             }
-            btn.disabled = false;
-            btn.style.opacity = "1";
-            return true;
+            btn.disabled = false; btn.style.opacity = "1";
+            res.innerHTML = "Gira para ganhar!"; return true;
         }
 
         function girarRoleta() {
             if (!verificarTempoRoleta()) return;
-
             const wheel = document.getElementById('wheel');
             const res = document.getElementById('resultadoRoleta');
             const btn = document.getElementById('btnGirar');
-            
-            // Gravar o tempo atual no localStorage
             localStorage.setItem('ultimoGiro', new Date().getTime());
-            
             const random = Math.floor(Math.random() * 3600) + 3600;
             wheel.style.transform = `rotate(${random}deg)`;
             btn.disabled = true;
-            
             setTimeout(() => {
                 const finalDeg = random % 360;
                 if(finalDeg >= 0 && finalDeg < 90) res.innerHTML = "🎉 Ganhaste 10% de desconto!";
